@@ -13,6 +13,7 @@
     "axios": "^0.16.2",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
-    "koa-router": "^7.2.1"
+    "koa-router": "^7.2.1",
+    "sha1": "^1.1.1"
   }
 }
