@@ -7,7 +7,7 @@ const router = new Router()
 const port = process.env.HTTP_PORT || 80
 router.use(bodyParser())
 
-router.post('/wxapi', async (ctx) => {
+router.get('/wxapi', async (ctx) => {
 	const rq = ctx.request.body;
 	ctx.type = 'text/json';
 	ctx.body = rq.echostr;
