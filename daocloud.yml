@@ -1,37 +1,14 @@
-version: 3
-stages:
-- test
-- build
-- deploy
-标准构建:
-  stage: build
-  job_type: image_build
-  only:
-    branches:
-    - .*
-    tags:
-    - .*
-  allow_failure: false
-  build_dir: /
-  cache: true
-  dockerfile_path: /Dockerfile
-测试任务:
-  stage: test
-  job_type: test
-  only:
-    branches:
-    - .*
-  except:
-    tags:
-    - .*
-  pull_request: false
-  allow_failure: false
-  before_script:
-  - ""
-  image: ubuntu:16.04
-  install:
-  - ""
-  script:
-  - '# Working directory with cloned repository /daocloud/builder/src'
-  - ""
-  - echo Hello,Nooldey
+version: 2.0
+test:
+build:
+  lite_image:
+    compile:
+      dockerfile_path: Dockerfile
+      build_dir: /
+      cache: true
+    extract:
+      - /app/dist
+    package:
+      dockerfile_path: Dockerfile.sec
+      build_dir: /
+      cache: true

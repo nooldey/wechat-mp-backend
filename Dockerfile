@@ -1,8 +1,13 @@
-FROM node:slim
-MAINTAINER nooldey<nooldey@gmail.com>
+FROM node:8.0.0
+MAINTAINER nooldey <nooldey@gmail.com>
 
-RUN apt-get update && apt-get install -y git ssh-client ca-certificates -no-install-recommends && rm -r /var/lib/apt/lists/*
+RUN mkdir -p /app
+WORKDIR /app
 
-RUN echo "Asia/Shanghai" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+COPY package.json /app/
 
-EXPOSE 4000
+RUN npm install
+
+COPY . /app
+
+RUN npm start
