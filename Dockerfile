@@ -10,4 +10,4 @@ RUN npm install
 
 COPY . /app
 
-RUN npm start
+# RUN npm start
