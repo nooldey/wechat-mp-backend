@@ -5,7 +5,7 @@ const sha1 = require('sha1')
 
 const app = new Koa()
 const router = new Router()
-const port = process.env.HTTP_PORT || 80
+const port = 80
 
 const config = {
 	wechat: {
@@ -17,8 +17,8 @@ const config = {
 
 router.use(bodyParser())
 
-router.get('/', async (ctx) => {
-	ctx.type = 'text/html';
+router.get('/', async ctx => {
+	ctx.type = 'text/json';
 	ctx.body = "Hello Nooldey";
 })
 
