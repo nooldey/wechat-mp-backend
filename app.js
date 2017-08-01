@@ -1,19 +1,23 @@
 const Koa = require('koa')
+const fs = require('fs')
+const path = require('path')
 const Router = require('koa-router')
 const bodyParser = require('koa-bodyparser')
-const sha1 = require('sha1')
 
 const app = new Koa()
 const router = new Router()
 const port = 80
 
 const wechat = require('./wechat/generator')
+const key_file = path.join(__dirname,'./config/wechat.txt')
 
 const config = {
 	wechat: {
 		appID: process.env.APP_ID,
 		appSecret: process.env.APP_KEY,
-		token: process.env.APP_TOKEN
+		token: process.env.APP_TOKEN,
+		getAccessToken: () => fs.readFileSync(key_file),
+		saveAccessToken: () => fs.writeFileSync(key_file)
 	}
 }
 
@@ -24,8 +28,8 @@ router.get('/', async ctx => {
 	ctx.body = "Hello Nooldey";
 })
 
-router.get('/wx', wechat(config.wechat))
+router.use('/wx', wechat(config.wechat))
 
-// app.use(wechat(config.wechat))
 app.use(router.routes()).use(router.allowedMethods())
+
 app.listen(port)
