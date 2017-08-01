@@ -18,7 +18,8 @@ const config = {
 router.use(bodyParser())
 
 router.get('/wxapi', async (ctx) => {
-	const rq = ctx.request.body;
+	// const rq = ctx.request.body;
+	const rq = ctx.query;
 	const token = config.wechat.token;
 	const signature = rq.signature;
 	const nonce = rq.nonce;
