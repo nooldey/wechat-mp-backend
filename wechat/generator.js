@@ -1,9 +1,9 @@
 const sha1 = require('sha1')
 
-module.exports = (opts) => {
+module.exports = (opt) => {
     return async(ctx, next) => {
         const rq = ctx.query;
-        const token = config.wechat.token;
+        const token = opt.token;
         const { signature, nonce, timestamp, echostr } = rq;
         let str = [token, timestamp, nonce].sort().join('');
         let sha = sha1(str);

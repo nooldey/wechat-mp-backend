@@ -24,8 +24,8 @@ router.get('/', async ctx => {
 	ctx.body = "Hello Nooldey";
 })
 
-// router.get('/wx', wechat(config.wechat))
+router.get('/wx', wechat(config.wechat))
 
-app.use(wechat(config.wechat))
+// app.use(wechat(config.wechat))
 app.use(router.routes()).use(router.allowedMethods())
 app.listen(port)
