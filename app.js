@@ -18,17 +18,15 @@ const config = {
 router.use(bodyParser())
 
 router.get('/', async ctx => {
-	ctx.type = 'text/json';
+	ctx.type = 'text/html';
 	ctx.body = "Hello Nooldey";
 })
 
 router.get('/wxapi', async (ctx) => {
-	const rq = ctx.request.body;
+	// const rq = ctx.request.body;
+	const rq = ctx.query;
 	const token = config.wechat.token;
-	const signature = rq.signature;
-	const nonce = rq.nonce;
-	const timestamp = rq.timestamp;
-	const echostr = rq.echostr;
+	const {signature,nonce,timestamp,echostr} = rq;
 	let str = [token,timestamp,nonce].sort().join('');
 	let sha = sha1(str);
 	ctx.type = 'text/json';
