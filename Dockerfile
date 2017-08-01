@@ -3,7 +3,6 @@ MAINTAINER nooldey <nooldey@gmail.com>
 
 ENV HTTP_PORT=8000
 
-
 RUN mkdir -p /app
 COPY . /app
 WORKDIR /app
