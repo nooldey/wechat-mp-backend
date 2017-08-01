@@ -28,7 +28,7 @@ router.get('/', async ctx => {
 	ctx.body = "Hello Nooldey";
 })
 
-router.use('/wx', wechat(config.wechat))
+router.all('/wx', wechat(config.wechat))
 
 app.use(router.routes()).use(router.allowedMethods())
 
