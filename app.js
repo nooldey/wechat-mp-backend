@@ -17,6 +17,11 @@ const config = {
 
 router.use(bodyParser())
 
+router.get('/', async (ctx) => {
+	ctx.type = 'text/html';
+	ctx.body = "Hello Nooldey"
+})
+
 router.get('/wxapi', async (ctx) => {
 	// const rq = ctx.request.body;
 	const rq = ctx.query;
