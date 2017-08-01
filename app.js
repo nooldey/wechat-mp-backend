@@ -7,6 +7,8 @@ const app = new Koa()
 const router = new Router()
 const port = 80
 
+const wechat = require('./wechat/generator')
+
 const config = {
 	wechat: {
 		appID: process.env.APP_ID,
@@ -22,17 +24,7 @@ router.get('/', async ctx => {
 	ctx.body = "Hello Nooldey";
 })
 
-router.get('/wxapi', async (ctx) => {
-	// const rq = ctx.request.body;
-	const rq = ctx.query;
-	const token = config.wechat.token;
-	const {signature,nonce,timestamp,echostr} = rq;
-	let str = [token,timestamp,nonce].sort().join('');
-	let sha = sha1(str);
-	ctx.type = 'text/json';
-	ctx.body = (sha===signature) ? echostr + '' : "failed";
-})
+router.get('/wxapi', wechat(config.wechat))
 
 app.use(router.routes()).use(router.allowedMethods())
-
 app.listen(port)
