@@ -6,9 +6,3 @@ build:
       dockerfile_path: Dockerfile
       build_dir: /
       cache: true
-    extract:
-      - /app/dist
-    package:
-      dockerfile_path: Dockerfile.sec
-      build_dir: /
-      cache: true

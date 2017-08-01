@@ -1,13 +1,15 @@
 FROM node:8.0.0
 MAINTAINER nooldey <nooldey@gmail.com>
 
-RUN mkdir -p /app
-WORKDIR /app
+ENV HTTP_PORT=8000
 
-COPY package.json /app/
+
+RUN mkdir -p /app
+COPY . /app
+WORKDIR /app
 
 RUN npm install
 
-COPY . /app
+EXPOSE 8000
 
-# RUN npm start
+CMD ["npm","start"]
