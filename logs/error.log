@@ -1,5 +1,0 @@
-start log...
-[object Promise]
-{"log_time":"2017-08-02T08:35:49.221Z","url":"/wx","argument":{},"method":"POST","response":{"status":404,"message":"Not Found","header":{}}}
-[object Promise]
-{"log_time":"2017-08-02T08:36:37.922Z","url":"/wx","argument":{},"method":"POST","response":{"status":404,"message":"Not Found","header":{}}}

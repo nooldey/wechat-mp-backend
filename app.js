@@ -39,7 +39,7 @@ router.get('/logs', async ctx => {
 	ctx.type = "text/json";
 	ctx.body = fs.readFileSync(err_log)
 })
-router.get('/acclogs', async ctx => {
+router.get('/alogs', async ctx => {
 	ctx.type = "text/json";
 	ctx.body = fs.readFileSync(acc_log)
 })

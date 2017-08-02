@@ -1,5 +1,6 @@
 const sha1 = require('sha1')
-const { handleReq } = require('./handle')
+const getRawBody = require('raw-body')
+const util = require('../libs/util')
 
 const fs = require('fs')
 const path = require('path')
@@ -10,7 +11,12 @@ module.exports = (opt) => {
     return async(ctx, next) => {
         const rq = (ctx.method === 'GET') ? ctx.query : ctx.request.body;
         const token = opt.token;
-        const { signature, nonce, timestamp, echostr } = rq;
+        const {
+            signature,
+            nonce,
+            timestamp,
+            echostr
+        } = rq;
         let str = [token, timestamp, nonce].sort().join('');
         let sha = sha1(str);
 
@@ -22,7 +28,35 @@ module.exports = (opt) => {
                 ctx.body = "success";
                 return false;
             } else {
-                ctx = handleReq(ctx)
+                let data = getRawBody(ctx.req, {
+                    limit: '1MB',
+                    encoding: this.charset
+                })
+                let d = util.parseXML(data)
+                let msg = util.formatMessage(d)
+                let now = Date.now()
+                ctx.status = 200;
+                ctx.type = 'application/xml';
+
+                if (msg.MsgType === 'event') {
+                    if (msg.Event === 'subscribe') {
+                        ctx.body = `<xml>
+                    <ToUserName><![CDATA[${msg.FromUserName}]]</ToUserName>
+                    <FromUserName><![CDATA[${msg.ToUserName}]]</FromUserName>
+                    <CreateTime>${now}</CreateTime>
+                    <MsgType><![CDATA[text]]</MsgType>
+                    <Content><![CDATA[HEY!Nooldey]]</Content>
+                    </xml>`;
+                    }
+                } else {
+                    ctx.body = `<xml>
+                    <ToUserName><![CDATA[${msg.FromUserName}]]</ToUserName>
+                    <FromUserName><![CDATA[${msg.ToUserName}]]</FromUserName>
+                    <CreateTime>${now}</CreateTime>
+                    <MsgType><![CDATA[text]]</MsgType>
+                    <Content><![CDATA[test]]</Content>
+                    </xml>`;
+                }
             }
         }
 
