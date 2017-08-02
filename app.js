@@ -12,6 +12,7 @@ const wechat = require('./wechat/generator')
 const key_file = path.join(__dirname,'./config/wechat.txt')
 
 const err_log = path.join(__dirname,'./logs/error.log')
+const acc_log = path.join(__dirname,'../logs/access.log')
 
 // 基本设置
 const config = {
@@ -37,6 +38,10 @@ router.get('/', async ctx => {
 router.get('/logs', async ctx => {
 	ctx.type = "text/json";
 	ctx.body = fs.readFileSync(err_log)
+})
+router.get('/acclogs', async ctx => {
+	ctx.type = "text/json";
+	ctx.body = fs.readFileSync(acc_log)
 })
 
 router.all('/wx', wechat(config.wechat))

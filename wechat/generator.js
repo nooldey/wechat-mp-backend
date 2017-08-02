@@ -37,6 +37,8 @@ module.exports = (opt) => {
             ctx.body = (sha === signature) ? echostr + '' : "failed";
         }
         else if (ctx.method === 'POST') {
+
+
             if (sha !== signature) {
                 ctx.body = "failed";
                 return false;
@@ -47,12 +49,15 @@ module.exports = (opt) => {
                 encoding: this.charset
             })
             let d = util.parseXML(data)
-console.log('this is content:',d)
+// console.log('this is content:',d)
             let msg = util.formatMessage(d)
-console.log('this is message:',msg)
+// console.log('this is message:',msg)
+fs.writeFileSync(err_log,d+'\n',{flag:'a'})
 
             if (msg.MsgType === 'event') {
+fs.writeFileSync(err_log,'event\n',{flag:'a'})
                 if (msg.Event === 'subscribe') {
+fs.writeFileSync(err_log,'subscribe\n',{flag:'a'})
                     let now = Date.now()
                     ctx.status = 200;
                     ctx.type = 'application/xml';
@@ -62,7 +67,8 @@ console.log('this is message:',msg)
                     <CreateTime>${now}</CreateTime>
                     <MsgType><![CDATA[text]]</MsgType>
                     <Content><![CDATA[HEY!Nooldey]]</Content>
-                    </xml>`
+                    </xml>`;
+fs.writeFileSync(err_log,'body:'+ctx.body+'\n',{flag:'a'})                 
                 }
             }
         }
