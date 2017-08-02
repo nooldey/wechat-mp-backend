@@ -1,6 +1,4 @@
 const sha1 = require('sha1')
-const getRawBody = require('raw-body')
-const util = require('../libs/util')
 
 const fs = require('fs')
 const path = require('path')
@@ -9,18 +7,14 @@ const acc_log = path.join(__dirname, '../logs/access.log')
 
 module.exports = (opt) => {
     return async(ctx, next) => {
-        const rq = (ctx.method === 'GET') ? ctx.query : ctx.request.body;
+        const rq = ctx.query;
         const token = opt.token;
-        const {
-            signature,
-            nonce,
-            timestamp,
-            echostr
-        } = rq;
+        const { signature, nonce, timestamp } = rq;
         let str = [token, timestamp, nonce].sort().join('');
         let sha = sha1(str);
 
         if (ctx.method === 'GET') {
+            const { echostr } = rq;
             ctx.body = (sha === signature) ? echostr + '' : "failed";
         }
         if (ctx.method === 'POST') {
@@ -28,12 +22,9 @@ module.exports = (opt) => {
                 ctx.body = "success";
                 return false;
             } else {
-                let data = getRawBody(ctx.req, {
-                    limit: '1MB',
-                    encoding: this.charset
-                })
-                let d = util.parseXML(data)
-                let msg = util.formatMessage(d)
+console.log(ctx.req)
+                // 处理xml
+                // 设置响应内文
                 let now = Date.now()
                 ctx.status = 200;
                 ctx.type = 'application/xml';
