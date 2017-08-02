@@ -1,5 +1,5 @@
 const sha1 = require('sha1')
-const handleReq = require('./handle')
+const { handleReq } = require('./handle')
 
 const fs = require('fs')
 const path = require('path')
@@ -22,7 +22,7 @@ module.exports = (opt) => {
                 ctx.body = "success";
                 return false;
             } else {
-                handleReq(ctx)
+                ctx = handleReq(ctx)
             }
         }
 

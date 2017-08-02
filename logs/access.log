@@ -1,2 +1,5 @@
 start log...
 {"log_time":"2017-08-02T08:51:26.179Z","url":"/wx","argument":{},"method":"GET","response":{"status":200,"message":"OK","header":{"content-type":"text/plain; charset=utf-8","content-length":"6"}}}
+{"log_time":"2017-08-02T08:57:42.140Z","url":"/wx","argument":{},"method":"POST","response":{"status":200,"message":"OK","header":{"content-type":"application/xml","content-length":"337"}}}
+{"log_time":"2017-08-02T08:58:00.099Z","url":"/wx","argument":{},"method":"POST","response":{"status":200,"message":"OK","header":{"content-type":"application/xml","content-length":"337"}}}
+{"log_time":"2017-08-02T08:59:09.724Z","url":"/wx","argument":{},"method":"POST","response":{"status":200,"message":"OK","header":{"content-type":"application/xml","content-length":"337"}}}

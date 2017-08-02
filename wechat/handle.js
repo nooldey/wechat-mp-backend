@@ -1,7 +1,7 @@
 const getRawBody = require('raw-body')
 const util = require('../libs/util')
 
-const handleReq = ctx => {
+const handleReq = (ctx) => {
     // xml
     let data = getRawBody(ctx.req, {
         limit: '1MB',
@@ -17,7 +17,7 @@ const handleReq = ctx => {
             ctx.type = 'application/xml';
             ctx.body = `<xml>
                     <ToUserName><![CDATA[${msg.FromUserName}]]</ToUserName>
-                    <FromUserName><![CDATA[${msg.FromUserName}]]</FromUserName>
+                    <FromUserName><![CDATA[${msg.ToUserName}]]</FromUserName>
                     <CreateTime>${now}</CreateTime>
                     <MsgType><![CDATA[text]]</MsgType>
                     <Content><![CDATA[HEY!Nooldey]]</Content>
@@ -29,15 +29,13 @@ const handleReq = ctx => {
         ctx.type = 'application/xml';
         ctx.body = `<xml>
                     <ToUserName><![CDATA[${msg.FromUserName}]]</ToUserName>
-                    <FromUserName><![CDATA[${msg.FromUserName}]]</FromUserName>
+                    <FromUserName><![CDATA[${msg.ToUserName}]]</FromUserName>
                     <CreateTime>${now}</CreateTime>
                     <MsgType><![CDATA[text]]</MsgType>
                     <Content><![CDATA[test]]</Content>
                     </xml>`;
     }
-
-
-
+    return ctx
 }
 
 module.exports = {
