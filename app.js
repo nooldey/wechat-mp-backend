@@ -11,13 +11,17 @@ const port = 80
 const wechat = require('./wechat/generator')
 const key_file = path.join(__dirname,'./config/wechat.txt')
 
+// 基本设置
 const config = {
 	wechat: {
-		appID: process.env.APP_ID,
-		appSecret: process.env.APP_KEY,
-		token: process.env.APP_TOKEN,
-		getAccessToken: () => fs.readFileSync(key_file),
-		saveAccessToken: () => fs.writeFileSync(key_file)
+		appID: process.env.APP_ID || 'wxbbb0c73cb780403a',
+		appSecret: process.env.APP_KEY || '083c35e0515675405584177b9ea7d93f',
+		token: process.env.APP_TOKEN || 'codenooldey',
+		// getAccessToken: () => fs.readFileSync(key_file),
+		// saveAccessToken: (data) => {
+		// 	data = JSON.stringify(data)
+		// 	return fs.writeFileSync(key_file,data)
+		// }
 	}
 }
 

@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app"
+    "start": "nodemon app.js"
   },
   "author": "Nooldey",
   "license": "ISC",
@@ -14,6 +14,9 @@
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
-    "sha1": "^1.1.1"
+    "nodemon": "^1.11.0",
+    "raw-body": "^2.2.0",
+    "sha1": "^1.1.1",
+    "xml2js": "^0.4.17"
   }
 }
