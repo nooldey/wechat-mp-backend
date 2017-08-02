@@ -15,31 +15,11 @@ module.exports = (opt) => {
         let str = [token, timestamp, nonce].sort().join('');
         let sha = sha1(str);
 
-        // 请求日志记录
-        let log_content = {
-            log_time: new Date(),
-            url: ctx.request.url,
-            argument: rq,
-            method: ctx.method,
-            response: ctx.response,
-            body: ctx.body
-        };
-        let log = JSON.stringify(log_content) + "\n";
-
-        if (ctx.response.status!==200) {
-            fs.writeFileSync(err_log,log,{flag:'a'})
-        } else {
-            fs.writeFileSync(acc_log,log,{flag:'a'})
-        }
-
         // 请求处理
         if (ctx.method === 'GET') {
             ctx.type = 'text/json';
             ctx.body = (sha === signature) ? echostr + '' : "failed";
-        }
-        else if (ctx.method === 'POST') {
-
-
+        } else if (ctx.method === 'POST') {
             if (sha !== signature) {
                 ctx.body = "failed";
                 return false;
@@ -73,6 +53,24 @@ fs.writeFileSync(err_log,'body:'+ctx.body+'\n',{flag:'a'})
                 }
             }
         }
+
+        // 请求日志记录
+        let log_content = {
+            log_time: new Date(),
+            url: ctx.request.url,
+            argument: rq,
+            method: ctx.method,
+            response: ctx.response,
+            body: ctx.body
+        };
+        let log = JSON.stringify(log_content) + "\n";
+
+        if (ctx.response.status!==200) {
+            fs.writeFileSync(err_log,log,{flag:'a'})
+        } else {
+            fs.writeFileSync(acc_log,log,{flag:'a'})
+        }
+        
         await next();
     }
 }
