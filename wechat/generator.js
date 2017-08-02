@@ -21,7 +21,8 @@ module.exports = (opt) => {
             url: ctx.request.url,
             argument: rq,
             method: ctx.method,
-            response: ctx.response
+            response: ctx.response,
+            body: ctx.body
         };
         let log = JSON.stringify(log_content) + "\n";
 
