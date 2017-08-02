@@ -11,7 +11,7 @@ const port = 80
 const wechat = require('./wechat/generator')
 const key_file = path.join(__dirname,'./config/wechat.txt')
 
-const err_log = path.join(__dirname,'../logs/error.log')
+const err_log = path.join(__dirname,'./logs/error.log')
 
 // 基本设置
 const config = {
