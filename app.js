@@ -12,7 +12,7 @@ const wechat = require('./wechat/generator')
 const key_file = path.join(__dirname,'./config/wechat.txt')
 
 const err_log = path.join(__dirname,'./logs/error.log')
-const acc_log = path.join(__dirname,'../logs/access.log')
+const acc_log = path.join(__dirname,'./logs/access.log')
 
 // 基本设置
 const config = {
