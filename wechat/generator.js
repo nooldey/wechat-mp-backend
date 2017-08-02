@@ -1,4 +1,5 @@
 const sha1 = require('sha1')
+const util = require('../libs/util')
 
 const fs = require('fs')
 const path = require('path')
@@ -14,40 +15,27 @@ module.exports = (opt) => {
         let sha = sha1(str);
 
         if (ctx.method === 'GET') {
-            const { echostr } = rq;
-            ctx.body = (sha === signature) ? echostr + '' : "failed";
+            ctx.body = (sha === signature) ? rq.echostr + '' : "failed";
         }
         if (ctx.method === 'POST') {
             if (sha !== signature) {
                 ctx.body = "success";
                 return false;
             } else {
-console.log(ctx.req)
                 // 处理xml
+                let msg = util.formatMessage(ctx.request.body.xml)
                 // 设置响应内文
                 let now = Date.now()
                 ctx.status = 200;
                 ctx.type = 'application/xml';
-
-                if (msg.MsgType === 'event') {
-                    if (msg.Event === 'subscribe') {
-                        ctx.body = `<xml>
-                    <ToUserName><![CDATA[${msg.FromUserName}]]</ToUserName>
-                    <FromUserName><![CDATA[${msg.ToUserName}]]</FromUserName>
+                ctx.body = `<xml>
+                    <ToUserName><![CDATA[${msg.FromUserName}]]></ToUserName>
+                    <FromUserName><![CDATA[${msg.ToUserName}]]></FromUserName>
                     <CreateTime>${now}</CreateTime>
-                    <MsgType><![CDATA[text]]</MsgType>
-                    <Content><![CDATA[HEY!Nooldey]]</Content>
+                    <MsgType><![CDATA[text]]></MsgType>
+                    <Content><![CDATA[test]]></Content>
                     </xml>`;
-                    }
-                } else {
-                    ctx.body = `<xml>
-                    <ToUserName><![CDATA[${msg.FromUserName}]]</ToUserName>
-                    <FromUserName><![CDATA[${msg.ToUserName}]]</FromUserName>
-                    <CreateTime>${now}</CreateTime>
-                    <MsgType><![CDATA[text]]</MsgType>
-                    <Content><![CDATA[test]]</Content>
-                    </xml>`;
-                }
+                
             }
         }
 
