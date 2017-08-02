@@ -26,14 +26,23 @@ module.exports = (opt) => {
                 let msg = util.formatMessage(ctx.request.body.xml)
                 // 设置响应内文
                 let now = Date.now()
+                let tc = {type: 'text',cont: null}
                 ctx.status = 200;
                 ctx.type = 'application/xml';
+                if (msg.MsgType == 'event') {
+                    if (msg.Event === 'subscribe') {
+                        tc.cont = '终于等到你，还好我没放弃'
+                    }
+                }
+                if (msg.MsgType == 'text') {
+                    tc.cont = msg.Content
+                }
                 ctx.body = `<xml>
                     <ToUserName><![CDATA[${msg.FromUserName}]]></ToUserName>
                     <FromUserName><![CDATA[${msg.ToUserName}]]></FromUserName>
                     <CreateTime>${now}</CreateTime>
-                    <MsgType><![CDATA[text]]></MsgType>
-                    <Content><![CDATA[test]]></Content>
+                    <MsgType><![CDATA[${tc.type}]]></MsgType>
+                    <Content><![CDATA[${tc.cont}]]></Content>
                     </xml>`;
                 
             }
@@ -45,9 +54,10 @@ module.exports = (opt) => {
             url: ctx.request.url,
             argument: rq,
             method: ctx.method,
-            response: ctx.response
+            response: ctx.response,
+            request: ctx.request.body
         };
-        let log = JSON.stringify(log_content) + "\n";
+        let log = JSON.stringify(log_content) + "\n\n";
 
         if (ctx.response.status !== 200) {
             fs.writeFileSync(err_log, log, {
