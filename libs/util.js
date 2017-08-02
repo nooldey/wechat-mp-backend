@@ -18,7 +18,8 @@ const formatMessage = (res) => {
     let msg = {}
     if (typeof res === 'object') {
         let keys = Object.keys(res)
-        keys.forEach( (k,i) => {
+        for(let i = 0; i < keys.length; i++) {
+            let k = keys[i]
             let item = res[i]
             if (!(item instanceof Array) || item.length === 0) {
                 continue
@@ -36,12 +37,12 @@ const formatMessage = (res) => {
                     msg[k].push(formatMessage(t))
                 })
             }
-        })
+        }
     }
     return msg
 }
 
-export {
+module.exports = {
     parseXML,
     formatMessage
 }
