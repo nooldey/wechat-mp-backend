@@ -15,7 +15,30 @@ const parseXML = (xml) => {
 }
 
 const formatMessage = (res) => {
-
+    let msg = {}
+    if (typeof res === 'object') {
+        let keys = Object.keys(res)
+        keys.forEach( (k,i) => {
+            let item = res[i]
+            if (!(item instanceof Array) || item.length === 0) {
+                continue
+            }
+            if (item.length === 1) {
+                let val = item[0]
+                if (typeof val === 'object') {
+                    msg[k] = formatMessage(val)
+                } else {
+                    msg[k] = (val || '').trim()
+                }
+            } else {
+                msg[k] = []
+                item.forEach(t => {
+                    msg[k].push(formatMessage(t))
+                })
+            }
+        })
+    }
+    return msg
 }
 
 export {
